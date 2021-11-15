@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Time To Pray</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="email">Email</string>
+    <string name="l_tfen_bo_alanlar_doldurunuz">Lütfen boş alanları doldurunuz</string>
+    <string name="password">Şifre</string>
+    <string name="login_text">Giriş Yap</string>
+    <string name="google_ile_devam_et">yada google ile devam et</string>
+</resources>
