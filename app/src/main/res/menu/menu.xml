@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/home"
+        android:title="@string/home"
+        android:icon="@drawable/ic_home"
+        app:exb_color="@color/turquoise" />
+
+    <item
+        android:id="@+id/questions"
+        android:title="@string/questions"
+        android:icon="@drawable/ic_question"
+        app:exb_color="@color/turquoise" />
+
+    <item
+        android:id="@+id/settings"
+        android:title="@string/settings"
+        android:icon="@drawable/ic_settings"
+        app:exb_color="@color/turquoise" />
+</menu>
