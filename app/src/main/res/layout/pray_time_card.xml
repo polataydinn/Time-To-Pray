@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="@color/turquoise">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/morning"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_gravity="center|start"
+        android:layout_marginStart="24dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="07:25"
+        android:layout_gravity="center|end"
+        android:textColor="@color/white"
+        android:layout_marginEnd="84dp"
+        android:textSize="18sp"/>
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center|end"
+        android:layout_marginEnd="24dp"
+        android:src="@drawable/ic_sound_off"/>
+
+</FrameLayout>

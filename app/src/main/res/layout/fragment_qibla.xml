@@ -7,6 +7,7 @@
     tools:context=".ui.fragments.QiblaFragment">
 
     <FrameLayout
+        android:id="@+id/qible_fragment_back_press"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="28dp"
@@ -38,6 +39,7 @@
         android:textStyle="bold" />
 
     <FrameLayout
+        android:id="@+id/qible_fragment_reload"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_gravity="end"
@@ -108,6 +110,7 @@
         android:layout_height="500dp"
         android:foreground="@color/transparent_turquoise"
         android:scaleType="centerCrop"
+        android:paddingBottom="98dp"
         android:src="@drawable/camel_walking"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

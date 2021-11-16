@@ -21,4 +21,17 @@ class MainFragment : Fragment() {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.mainFragmentCompass.setOnClickListener {
+            val qiblaFragment = QiblaFragment()
+            activity?.let {
+                it.supportFragmentManager.beginTransaction()
+                    .replace(R.id.mainFragmentContainer, qiblaFragment)
+                    .commit()
+            }
+        }
+    }
 }

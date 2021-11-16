@@ -4,11 +4,17 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Makine/AndroidStudioProjects/TimeToPray/app/src/main/res/drawable/custom_button_shape.xml" value="0.3828125" />
+        <entry key="..\:/Users/Makine/AndroidStudioProjects/TimeToPray/app/src/main/res/drawable/custom_button_shape_white.xml" value="0.3828125" />
         <entry key="..\:/Users/Makine/AndroidStudioProjects/TimeToPray/app/src/main/res/drawable/custom_input.xml" value="0.3828125" />
         <entry key="..\:/Users/Makine/AndroidStudioProjects/TimeToPray/app/src/main/res/drawable/custom_shape.xml" value="0.3828125" />
+        <entry key="..\:/Users/Makine/AndroidStudioProjects/TimeToPray/app/src/main/res/drawable/custom_shape_turqoise.xml" value="0.3828125" />
         <entry key="..\:/Users/Makine/AndroidStudioProjects/TimeToPray/app/src/main/res/drawable/ic_home.xml" value="0.3828125" />
         <entry key="..\:/Users/Makine/AndroidStudioProjects/TimeToPray/app/src/main/res/drawable/ic_question.xml" value="0.3828125" />
+        <entry key="..\:/Users/Makine/AndroidStudioProjects/TimeToPray/app/src/main/res/drawable/ic_refresh.xml" value="0.3828125" />
+        <entry key="..\:/Users/Makine/AndroidStudioProjects/TimeToPray/app/src/main/res/drawable/ic_refresh_turquoise.xml" value="0.3828125" />
         <entry key="..\:/Users/Makine/AndroidStudioProjects/TimeToPray/app/src/main/res/drawable/ic_settings.xml" value="0.3828125" />
+        <entry key="..\:/Users/Makine/AndroidStudioProjects/TimeToPray/app/src/main/res/drawable/ic_sound_off.xml" value="0.3828125" />
+        <entry key="..\:/Users/Makine/AndroidStudioProjects/TimeToPray/app/src/main/res/drawable/ic_sound_on.xml" value="0.3828125" />
         <entry key="..\:/Users/Makine/AndroidStudioProjects/TimeToPray/app/src/main/res/drawable/splash_background.xml" value="0.3828125" />
         <entry key="..\:/Users/Makine/AndroidStudioProjects/TimeToPray/app/src/main/res/layout/activity_main.xml" value="0.28940217391304346" />
         <entry key="..\:/Users/Makine/AndroidStudioProjects/TimeToPray/app/src/main/res/layout/activity_splash.xml" value="0.36666666666666664" />
@@ -18,6 +24,7 @@
         <entry key="..\:/Users/Makine/AndroidStudioProjects/TimeToPray/app/src/main/res/layout/fragment_profile.xml" value="0.28940217391304346" />
         <entry key="..\:/Users/Makine/AndroidStudioProjects/TimeToPray/app/src/main/res/layout/fragment_qibla.xml" value="0.33" />
         <entry key="..\:/Users/Makine/AndroidStudioProjects/TimeToPray/app/src/main/res/layout/fragment_register.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Makine/AndroidStudioProjects/TimeToPray/app/src/main/res/layout/pray_time_card.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Makine/AndroidStudioProjects/TimeToPray/app/src/main/res/menu/menu.xml" value="0.36666666666666664" />
       </map>
     </option>
