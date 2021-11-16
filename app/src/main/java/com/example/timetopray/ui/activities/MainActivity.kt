@@ -47,13 +47,13 @@ class MainActivity : AppCompatActivity() {
             MenuItemDescriptor.Builder(
                 this,
                 R.id.settings,
-                R.drawable.ic_settings,
-                R.string.settings,
+                R.drawable.ic_profile,
+                R.string.profile,
                 resources.getColor(R.color.turquoise)
             ).build()
         )
 
-        bottomBar.onItemSelectedListener = { view, menuItem, _ ->
+        bottomBar.onItemSelectedListener = { _, menuItem, _ ->
             when (menuItem.id) {
                 R.id.home -> {
                     val mainFragment = MainFragment()

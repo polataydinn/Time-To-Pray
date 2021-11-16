@@ -109,18 +109,35 @@
         android:layout_width="match_parent"
         android:layout_height="500dp"
         android:foreground="@color/transparent_turquoise"
-        android:scaleType="centerCrop"
         android:paddingBottom="98dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/camel_walking"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="350dp"
-        android:layout_gravity="bottom"
-        android:src="@drawable/custom_shape" />
+        android:layout_gravity="bottom">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/custom_shape" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:padding="28dp"
+            android:src="@drawable/qible_circle"/>
 
+        <ImageView
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_up_arrow"
+            />
+
+    </FrameLayout>
 </FrameLayout>
