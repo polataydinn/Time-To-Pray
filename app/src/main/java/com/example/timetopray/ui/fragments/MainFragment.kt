@@ -30,6 +30,7 @@ class MainFragment : Fragment() {
             activity?.let {
                 it.supportFragmentManager.beginTransaction()
                     .replace(R.id.mainFragmentContainer, qiblaFragment)
+                    .addToBackStack("")
                     .commit()
             }
         }

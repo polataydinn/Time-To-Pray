@@ -47,4 +47,5 @@ class QiblaFragment : Fragment() {
         (activity as MainActivity).showBottomBar()
         (activity as MainActivity).window.statusBarColor = (activity as MainActivity).getColor(R.color.white)
     }
+
 }
