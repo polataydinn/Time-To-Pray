@@ -1,5 +1,6 @@
 package com.example.timetopray.ui.data.room
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.timetopray.ui.data.models.cities.City
 import com.example.timetopray.ui.data.models.praytimes.PrayerTime
@@ -8,10 +9,10 @@ import com.example.timetopray.ui.data.models.praytimes.PrayerTime
 interface TimeToPrayDao {
 
     @Query("SELECT * FROM city_table")
-    fun getCity(): City
+    fun getCity(): LiveData<City>?
 
     @Query("SELECT * FROM time_table")
-    fun getAllTimes(): List<PrayerTime>
+    fun getAllTimes(): LiveData<List<PrayerTime>>?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertCity(city: City)

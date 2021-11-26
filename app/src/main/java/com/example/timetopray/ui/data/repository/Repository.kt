@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.timetopray.ui.data.api.Retrofit
 import com.example.timetopray.ui.data.models.cities.Cities
 import com.example.timetopray.ui.data.models.cities.City
+import com.example.timetopray.ui.data.models.cities.Country
 import com.example.timetopray.ui.data.models.praytimes.PrayTimes
 import com.example.timetopray.ui.data.models.praytimes.PrayerTime
 import com.example.timetopray.ui.data.room.TimeToPrayDao
@@ -13,12 +14,15 @@ import retrofit2.Response
 
 class Repository(private val timeToPrayDao: TimeToPrayDao) {
 
-    fun getAllCities(onResponse: (Cities) -> Unit) {
+    fun getAllCities(onResponse: (Country) -> Unit) {
         Retrofit.retrofit.let {
             Retrofit.api.getAllCities().enqueue(object : Callback<Cities> {
                 override fun onResponse(call: Call<Cities>, response: Response<Cities>) {
                     response.body()?.let { responseBody ->
-                        onResponse(responseBody)
+                        val country = responseBody.countries.filter {
+                            it.name == "TÜRKİYE"
+                        }
+                        onResponse(country[0])
                     }
                 }
 
@@ -45,9 +49,9 @@ class Repository(private val timeToPrayDao: TimeToPrayDao) {
         }
     }
 
-//    val getCity = timeToPrayDao.getCity()
+    val getCity = timeToPrayDao.getCity()
 
-//    fun getAllTimes() = timeToPrayDao.getAllTimes()
+    fun getAllTimes() = timeToPrayDao.getAllTimes()
 
     suspend fun insertCity(city: City) {
         timeToPrayDao.insertCity(city)

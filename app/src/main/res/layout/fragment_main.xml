@@ -60,7 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="118dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="28dp">
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -78,6 +78,7 @@
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize25Percent" />
 
         <TextView
+            android:id="@+id/main_fragment_city_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -88,7 +89,8 @@
             android:textColor="@color/white"
             android:textSize="18sp" />
 
-        <TextView
+        <TextClock
+            android:id="@+id/main_fragment_current_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -138,6 +140,8 @@
             android:layout_height="match_parent"/>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/pray_time_rv"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="12dp"

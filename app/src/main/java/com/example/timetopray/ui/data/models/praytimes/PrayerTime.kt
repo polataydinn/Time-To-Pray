@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "time_table")
 data class PrayerTime(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val _id: Int,
     @SerializedName("aksam")
     val aksam: String,

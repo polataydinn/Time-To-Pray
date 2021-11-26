@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
 @Entity(tableName = "city_table")
 data class City(
     @PrimaryKey
-    @SerializedName("_id")
+    @SerializedName("id")
     val _id: String,
     @SerializedName("lat")
     val lat: String,

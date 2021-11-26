@@ -14,24 +14,22 @@ class TimeToPrayViewModel(application: Application): AndroidViewModel(applicatio
 
     private val timeToPrayDao = TimeToPrayDatabase.getDatabase(application).timeToPrayDao()
     private val repository = Repository(timeToPrayDao)
-    //val getCity = repository.getCity
-  //  val getAllTimes = repository.getAllTimes()
+    val getCity = repository.getCity
+    val getAllTimes = repository.getAllTimes()
 
     fun getAllCities(cityName: String){
         var city = listOf<City>()
-        repository.getAllCities { cities ->
-            cities.countries.forEach { country ->
-                city = country.cities.filter {
-                    it.name == cityName
-                }
+        repository.getAllCities { country ->
+           city =  country.cities.filter {
+                it.name == cityName
             }
-            println("breakpoint")
-
+            insertCity(city[0])
+            getTimes(city[0]._id)
         }
     }
 
     fun getTimes(cityId: String){
-        repository.getTimes(cityId){prayTimes ->
+        repository.getTimes(cityId){ prayTimes ->
             prayTimes.prayerTimes.forEach {
                 insertTime(it)
             }
