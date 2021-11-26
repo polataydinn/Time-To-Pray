@@ -1,16 +1,14 @@
-package com.example.timetopray.ui.fragments
+package com.example.timetopray.ui.fragments.fridaymessagesfragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.timetopray.R
-import com.example.timetopray.databinding.FragmentAnswerQuestionBinding
-import com.example.timetopray.databinding.FragmentLoginBinding
+import com.example.timetopray.databinding.FragmentFridayMessagesBinding
 
-class LoginFragment : Fragment() {
-    private lateinit var _binding: FragmentLoginBinding
+class FridayMessagesFragment : Fragment() {
+    private lateinit var _binding: FragmentFridayMessagesBinding
     private val binding get() = _binding
 
     override fun onCreateView(
@@ -18,7 +16,7 @@ class LoginFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        _binding = FragmentFridayMessagesBinding.inflate(inflater, container, false)
         return binding.root
     }
 }

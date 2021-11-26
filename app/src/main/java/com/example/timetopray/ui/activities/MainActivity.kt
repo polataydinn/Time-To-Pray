@@ -5,9 +5,9 @@ import android.os.Bundle
 import androidx.core.view.isVisible
 import com.example.timetopray.R
 import com.example.timetopray.databinding.ActivityMainBinding
-import com.example.timetopray.ui.fragments.ForumFragment
-import com.example.timetopray.ui.fragments.MainFragment
-import com.example.timetopray.ui.fragments.ProfileFragment
+import com.example.timetopray.ui.fragments.fridaymessagesfragment.FridayMessagesFragment
+import com.example.timetopray.ui.fragments.mainfragment.MainFragment
+import com.example.timetopray.ui.fragments.profilefragment.ProfileFragment
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
 import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
 
@@ -36,9 +36,9 @@ class MainActivity : AppCompatActivity() {
         menu.add(
             MenuItemDescriptor.Builder(
                 this,
-                R.id.questions,
+                R.id.friday_messages,
                 R.drawable.ic_question,
-                R.string.questions,
+                R.string.friday_messages,
                 resources.getColor(R.color.turquoise)
             ).build()
         )
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         menu.add(
             MenuItemDescriptor.Builder(
                 this,
-                R.id.settings,
+                R.id.profile,
                 R.drawable.ic_profile,
                 R.string.profile,
                 resources.getColor(R.color.turquoise)
@@ -61,13 +61,13 @@ class MainActivity : AppCompatActivity() {
                         .replace(R.id.mainFragmentContainer, mainFragment)
                         .commit()
                 }
-                R.id.questions -> {
-                    val forumFragment = ForumFragment()
+                R.id.friday_messages -> {
+                    val forumFragment = FridayMessagesFragment()
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.mainFragmentContainer, forumFragment)
                         .commit()
                 }
-                R.id.settings -> {
+                R.id.profile -> {
                     val profileFragment = ProfileFragment()
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.mainFragmentContainer, profileFragment)

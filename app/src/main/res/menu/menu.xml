@@ -8,13 +8,13 @@
         app:exb_color="@color/turquoise" />
 
     <item
-        android:id="@+id/questions"
-        android:title="@string/questions"
+        android:id="@+id/friday_messages"
+        android:title="@string/friday_messages"
         android:icon="@drawable/ic_question"
         app:exb_color="@color/turquoise" />
 
     <item
-        android:id="@+id/settings"
+        android:id="@+id/profile"
         android:title="@string/profile"
         android:icon="@drawable/ic_profile"
         app:exb_color="@color/turquoise" />
