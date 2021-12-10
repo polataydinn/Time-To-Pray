@@ -1,22 +1,29 @@
 package com.example.timetopray.ui.fragments.mainfragment
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.Geocoder
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.example.timetopray.R
 import com.example.timetopray.databinding.FragmentMainBinding
+import com.example.timetopray.ui.activities.MainActivity
 import com.example.timetopray.ui.constants.Constants
 import com.example.timetopray.ui.data.models.praytimes.CustomPrayTime
 import com.example.timetopray.ui.data.viewmodel.TimeToPrayViewModel
 import com.example.timetopray.ui.fragments.mainfragment.adapter.MainFragmentAdapter
 import com.example.timetopray.ui.fragments.qiblefragment.QiblaFragment
-import java.sql.Time
+import com.example.timetopray.ui.util.Utils
 import java.util.*
 
 class MainFragment : Fragment() {
@@ -43,26 +50,47 @@ class MainFragment : Fragment() {
 
         binding.mainFragmentCurrentTime.format12Hour = "kk:mm"
 
-        mTimeToPrayViewModel.getAllCities("KAHRAMANMARAŞ")
-
-        mTimeToPrayViewModel.getAllTimes?.observe(viewLifecycleOwner) {
-            val listOfCustomPrayTime: MutableList<CustomPrayTime> = mutableListOf()
-            it[0].let { prayerTime ->
-                prayerTime.apply {
-                    listOfCustomPrayTime.add(CustomPrayTime("İmsak", imsak))
-                    listOfCustomPrayTime.add(CustomPrayTime("Güneş", gunes))
-                    listOfCustomPrayTime.add(CustomPrayTime("Öğle", ogle))
-                    listOfCustomPrayTime.add(CustomPrayTime("İkindi", ikindi))
-                    listOfCustomPrayTime.add(CustomPrayTime("Akşam", aksam))
-                    listOfCustomPrayTime.add(CustomPrayTime("Yatsı", yatsi))
-                }
+        mTimeToPrayViewModel.detailedLocation?.observe(viewLifecycleOwner){
+            if (it.isNotEmpty()){
+                binding.detailedAddress.text = it
             }
-            mainFragmentAdapter.setList(listOfCustomPrayTime)
-            binding.prayTimeRv.adapter = mainFragmentAdapter
         }
 
+        mTimeToPrayViewModel.location?.observe(viewLifecycleOwner){
+            if (it.isNotEmpty()){
+                binding.mainFragmentCityName.text = it
+            }
+        }
+
+        mTimeToPrayViewModel.getAllTimes?.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                val listOfCustomPrayTime: MutableList<CustomPrayTime> = mutableListOf()
+                val prayerTime = it.filter {
+                    it.date == ((currentTime.year+1900).toString() + "-" + (currentTime.month + 1) + "-" + (currentTime.date))
+                }
+                prayerTime[0].let { mPrayerTime ->
+                    mPrayerTime.apply {
+                        listOfCustomPrayTime.add(CustomPrayTime("İmsak", imsak))
+                        listOfCustomPrayTime.add(CustomPrayTime("Güneş", gunes))
+                        listOfCustomPrayTime.add(CustomPrayTime("Öğle", ogle))
+                        listOfCustomPrayTime.add(CustomPrayTime("İkindi", ikindi))
+                        listOfCustomPrayTime.add(CustomPrayTime("Akşam", aksam))
+                        listOfCustomPrayTime.add(CustomPrayTime("Yatsı", yatsi))
+                    }
+                }
+                mainFragmentAdapter.setList(listOfCustomPrayTime)
+                binding.prayTimeRv.adapter = mainFragmentAdapter
+            } else {
+                Utils.getLocation(requireContext()){ cityName ->
+                    mTimeToPrayViewModel.getAllCities(cityName)
+                }
+            }
+        }
+
+
+
         mTimeToPrayViewModel.getCity?.observe(viewLifecycleOwner) {
-            it.let {city ->
+            it?.let { city ->
                 binding.mainFragmentCityName.text = city.name
             }
         }

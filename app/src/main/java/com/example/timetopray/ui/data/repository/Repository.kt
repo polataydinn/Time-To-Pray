@@ -1,6 +1,7 @@
 package com.example.timetopray.ui.data.repository
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import com.example.timetopray.ui.data.api.Retrofit
 import com.example.timetopray.ui.data.models.cities.Cities
 import com.example.timetopray.ui.data.models.cities.City
@@ -51,7 +52,9 @@ class Repository(private val timeToPrayDao: TimeToPrayDao) {
 
     val getCity = timeToPrayDao.getCity()
 
-    fun getAllTimes() = timeToPrayDao.getAllTimes()
+    fun getAllTimes(): LiveData<List<PrayerTime>>? {
+        return timeToPrayDao.getAllTimes()
+    }
 
     suspend fun insertCity(city: City) {
         timeToPrayDao.insertCity(city)

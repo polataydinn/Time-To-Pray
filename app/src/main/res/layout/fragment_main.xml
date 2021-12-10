@@ -32,7 +32,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center|top"
         android:layout_marginTop="40dp"
-        android:text="Pazartesi 15 Aralık"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -121,7 +120,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
                 android:fontFamily="sans-serif-condensed"
-                android:text="Avsar mahallesi OnikiSubat"
                 android:textColor="@color/white" />
         </LinearLayout>
     </FrameLayout>
