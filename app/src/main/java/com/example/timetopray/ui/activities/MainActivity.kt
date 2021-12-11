@@ -1,16 +1,21 @@
 package com.example.timetopray.ui.activities
 
 import android.Manifest
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import com.example.timetopray.R
 import com.example.timetopray.databinding.ActivityMainBinding
+import com.example.timetopray.ui.data.models.userlocation.UserLocation
 import com.example.timetopray.ui.data.viewmodel.TimeToPrayViewModel
 import com.example.timetopray.ui.fragments.fridaymessagesfragment.FridayMessagesFragment
 import com.example.timetopray.ui.fragments.mainfragment.MainFragment
@@ -23,6 +28,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
 import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -34,16 +40,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setUserPermissions()
-
-        Utils.getDetailedLocation(this){
-            mTimeToPrayViewModel.detailedLocation?.postValue(it)
-        }
-
-        Utils.getLocation(this){
-            val liveData = mutableListOf<String>()
-            liveData.add(it)
-            mTimeToPrayViewModel.location?.postValue(it)
-        }
 
         val bottomBar: ExpandableBottomBar = binding.bottomBar
         val menu = bottomBar.menu
@@ -110,23 +106,24 @@ class MainActivity : AppCompatActivity() {
         binding.bottomBar.isVisible = true
     }
 
-    private fun setUserPermissions() {
+    fun setUserPermissions() {
         Dexter.withContext(this)
             .withPermissions(
                 Manifest.permission.ACCESS_FINE_LOCATION,
             ).withListener(object : MultiplePermissionsListener {
                 override fun onPermissionsChecked(report: MultiplePermissionsReport) {
                     if (report.areAllPermissionsGranted()) {
-                        Utils.getLocation(this@MainActivity){
-                            println("breakpoint")
-                        }
+                        getLocation()
+                    }
+
+                    if (report.deniedPermissionResponses.size != 0 && !report.isAnyPermissionPermanentlyDenied){
+                        setUserPermissions()
                     }
 
                     if (report.isAnyPermissionPermanentlyDenied) {
                         showSettingsDialog()
                     }
                 }
-
                 override fun onPermissionRationaleShouldBeShown(
                     permissions: MutableList<com.karumi.dexter.listener.PermissionRequest>?,
                     token: PermissionToken?
@@ -144,18 +141,52 @@ class MainActivity : AppCompatActivity() {
             .check()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            showSettingsDialog()
+            return
+        } else {
+            getLocation()
+        }
+    }
+
     private fun showSettingsDialog() {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(baseContext)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this@MainActivity)
         builder.setTitle("Konum İzini Gerekiyor")
-        builder.setMessage("Uygulama namaz vakitlerini alabilmek için konumunuza ihtiyaç duymaktadır.")
+        builder.setMessage("Uygulama namaz vakitlerini alabilmek için konumunuza ihtiyaç duymaktadır, İzinler -> Konuma gidip izin vermeniz gerekmektedir.")
         builder.setPositiveButton(
             "Ayarlara git"
         ) { dialog, which ->
-            dialog.cancel()
+            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+            val uri: Uri = Uri.fromParts("package", packageName, null)
+            intent.data = uri
+            startActivityForResult(intent, 111)
         }
-        builder.setNegativeButton(
-            "İptal et"
-        ) { dialog, which -> dialog.cancel() }
+        builder.setCancelable(false)
         builder.show()
+    }
+
+    private fun getLocation() {
+        Utils.getLocation(this) {
+            val userLocation =
+                it?.let { location ->
+                    UserLocation(
+                        location.adminArea.uppercase(),
+                        it.subAdminArea
+                    )
+                }
+            if (userLocation != null) {
+                mTimeToPrayViewModel.insertUserLocation(userLocation)
+                mTimeToPrayViewModel.getAllCities(userLocation.cityName)
+            }
+        }
     }
 }

@@ -50,15 +50,10 @@ class MainFragment : Fragment() {
 
         binding.mainFragmentCurrentTime.format12Hour = "kk:mm"
 
-        mTimeToPrayViewModel.detailedLocation?.observe(viewLifecycleOwner){
-            if (it.isNotEmpty()){
-                binding.detailedAddress.text = it
-            }
-        }
-
-        mTimeToPrayViewModel.location?.observe(viewLifecycleOwner){
-            if (it.isNotEmpty()){
-                binding.mainFragmentCityName.text = it
+        mTimeToPrayViewModel.getUserLocation?.observe(viewLifecycleOwner){
+            it?.let {
+                binding.mainFragmentCityName.text = it.cityName
+                binding.detailedAddress.text = it.detailedAddress
             }
         }
 
@@ -68,26 +63,27 @@ class MainFragment : Fragment() {
                 val prayerTime = it.filter {
                     it.date == ((currentTime.year+1900).toString() + "-" + (currentTime.month + 1) + "-" + (currentTime.date))
                 }
-                prayerTime[0].let { mPrayerTime ->
-                    mPrayerTime.apply {
-                        listOfCustomPrayTime.add(CustomPrayTime("İmsak", imsak))
-                        listOfCustomPrayTime.add(CustomPrayTime("Güneş", gunes))
-                        listOfCustomPrayTime.add(CustomPrayTime("Öğle", ogle))
-                        listOfCustomPrayTime.add(CustomPrayTime("İkindi", ikindi))
-                        listOfCustomPrayTime.add(CustomPrayTime("Akşam", aksam))
-                        listOfCustomPrayTime.add(CustomPrayTime("Yatsı", yatsi))
+                if (prayerTime.isNotEmpty()){
+                    prayerTime[0].let { mPrayerTime ->
+                        mPrayerTime.apply {
+                            listOfCustomPrayTime.add(CustomPrayTime("İmsak", imsak))
+                            listOfCustomPrayTime.add(CustomPrayTime("Güneş", gunes))
+                            listOfCustomPrayTime.add(CustomPrayTime("Öğle", ogle))
+                            listOfCustomPrayTime.add(CustomPrayTime("İkindi", ikindi))
+                            listOfCustomPrayTime.add(CustomPrayTime("Akşam", aksam))
+                            listOfCustomPrayTime.add(CustomPrayTime("Yatsı", yatsi))
+                        }
                     }
                 }
+
                 mainFragmentAdapter.setList(listOfCustomPrayTime)
                 binding.prayTimeRv.adapter = mainFragmentAdapter
             } else {
                 Utils.getLocation(requireContext()){ cityName ->
-                    mTimeToPrayViewModel.getAllCities(cityName)
+                    cityName?.adminArea?.let { city -> mTimeToPrayViewModel.getAllCities(city.uppercase()) }
                 }
             }
         }
-
-
 
         mTimeToPrayViewModel.getCity?.observe(viewLifecycleOwner) {
             it?.let { city ->

@@ -2,17 +2,14 @@ package com.example.timetopray.ui.data.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.timetopray.ui.data.models.cities.City
 import com.example.timetopray.ui.data.models.praytimes.PrayerTime
+import com.example.timetopray.ui.data.models.userlocation.UserLocation
 import com.example.timetopray.ui.data.repository.Repository
 import com.example.timetopray.ui.data.room.TimeToPrayDatabase
-import com.example.timetopray.ui.util.Utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.stream.Stream
 
 class TimeToPrayViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -20,9 +17,7 @@ class TimeToPrayViewModel(application: Application) : AndroidViewModel(applicati
     private val repository = Repository(timeToPrayDao)
     val getCity = repository.getCity
     val getAllTimes = repository.getAllTimes()
-    var detailedLocation: MutableLiveData<String>? = MutableLiveData()
-    var location: MutableLiveData<String>? = MutableLiveData()
-
+    val getUserLocation = repository.getUserLocation
 
     fun getAllCities(cityName: String) {
         var city = listOf<City>()
@@ -59,6 +54,12 @@ class TimeToPrayViewModel(application: Application) : AndroidViewModel(applicati
         }
     }
 
+    fun insertUserLocation(userLocation: UserLocation) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.insertUserLocation(userLocation)
+        }
+    }
+
     fun deleteAllCityInfo() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAllCityInfo()
@@ -68,6 +69,12 @@ class TimeToPrayViewModel(application: Application) : AndroidViewModel(applicati
     fun deleteAllTimes() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAllTimes()
+        }
+    }
+
+    fun deleteUserLocation() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteUserLocation()
         }
     }
 

@@ -8,6 +8,7 @@ import com.example.timetopray.ui.data.models.cities.City
 import com.example.timetopray.ui.data.models.cities.Country
 import com.example.timetopray.ui.data.models.praytimes.PrayTimes
 import com.example.timetopray.ui.data.models.praytimes.PrayerTime
+import com.example.timetopray.ui.data.models.userlocation.UserLocation
 import com.example.timetopray.ui.data.room.TimeToPrayDao
 import retrofit2.Call
 import retrofit2.Callback
@@ -56,6 +57,8 @@ class Repository(private val timeToPrayDao: TimeToPrayDao) {
         return timeToPrayDao.getAllTimes()
     }
 
+    val getUserLocation = timeToPrayDao.getUserLocation()
+
     suspend fun insertCity(city: City) {
         timeToPrayDao.insertCity(city)
     }
@@ -64,11 +67,19 @@ class Repository(private val timeToPrayDao: TimeToPrayDao) {
         timeToPrayDao.insertTime(prayTime)
     }
 
+    suspend fun insertUserLocation(userLocation: UserLocation){
+        timeToPrayDao.insertUserLocation(userLocation)
+    }
+
     suspend fun deleteAllCityInfo() {
         timeToPrayDao.deleteAllCityInfo()
     }
 
     suspend fun deleteAllTimes() {
         timeToPrayDao.deleteAllTimes()
+    }
+
+    suspend fun deleteUserLocation(){
+        timeToPrayDao.deleteUserLocation()
     }
 }
