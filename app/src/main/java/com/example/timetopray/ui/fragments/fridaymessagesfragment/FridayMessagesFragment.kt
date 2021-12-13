@@ -1,8 +1,10 @@
 package com.example.timetopray.ui.fragments.fridaymessagesfragment
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
@@ -26,6 +28,8 @@ class FridayMessagesFragment : Fragment() {
     private val binding get() = _binding
     private lateinit var adapter: FridayMessagesAdapter
     private val mTimeToPrayViewModel: TimeToPrayViewModel by viewModels()
+    private var savedFile: File? = null
+    var listOfSavedFiles = mutableListOf<File>()
 
 
     override fun onCreateView(
@@ -45,7 +49,14 @@ class FridayMessagesFragment : Fragment() {
                     saveImage(drawable)
                 }
                 1 -> {
-
+                    saveImage(drawable)
+                    savedFile?.let {
+                        val intent = Intent(Intent.ACTION_SEND);
+                        intent.setType("image/jpeg");
+                        intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(savedFile!!.absolutePath))
+                        listOfSavedFiles.add(savedFile!!)
+                        startActivity(Intent.createChooser(intent, "Resimi paylaş"))
+                    }
                 }
             }
         }
@@ -57,6 +68,7 @@ class FridayMessagesFragment : Fragment() {
             }
         }
     }
+
 
     private fun saveImage(drawable: Drawable) {
         val file = getDisc()
@@ -78,6 +90,7 @@ class FridayMessagesFragment : Fragment() {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutPutStream)
             Toast.makeText(requireContext(), "Dosya Basariyla Kaydedildi", Toast.LENGTH_SHORT)
                 .show()
+            savedFile = newFile
             fileOutPutStream.flush()
             fileOutPutStream.close()
 
@@ -94,5 +107,10 @@ class FridayMessagesFragment : Fragment() {
         return File(file, "FridayMessages")
     }
 
-
+    override fun onDestroy() {
+        listOfSavedFiles.forEach {
+            it.delete()
+        }
+        super.onDestroy()
+    }
 }
