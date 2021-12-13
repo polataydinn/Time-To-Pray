@@ -79,7 +79,7 @@ class MainFragment : Fragment() {
                 mainFragmentAdapter.setList(listOfCustomPrayTime)
                 binding.prayTimeRv.adapter = mainFragmentAdapter
             } else {
-                Utils.getLocation(requireContext()){ cityName ->
+                Utils.getLocation(activity as MainActivity){ cityName ->
                     cityName?.adminArea?.let { city -> mTimeToPrayViewModel.getAllCities(city.uppercase()) }
                 }
             }

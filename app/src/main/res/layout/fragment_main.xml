@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,12 +11,13 @@
         android:id="@+id/main_fragment_guide"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="28dp"
         android:background="@drawable/custom_button_shape_white"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="@drawable/my_ripple">
+        android:layout_margin="24dp"
+        android:foreground="@drawable/my_ripple"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -25,28 +26,31 @@
             android:src="@drawable/ic_book" />
     </FrameLayout>
 
-
     <TextView
         android:id="@+id/main_fragment_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|top"
-        android:layout_marginTop="40dp"
         android:textColor="@color/black"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+        app:layout_constraintEnd_toStartOf="@+id/main_fragment_compass"
+        app:layout_constraintStart_toEndOf="@+id/main_fragment_guide"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
         android:id="@+id/main_fragment_compass"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_gravity="top|end"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="28dp"
         android:background="@drawable/custom_button_shape_white"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="@drawable/my_ripple">
+        android:layout_margin="24dp"
+        android:foreground="@drawable/my_ripple"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -56,11 +60,15 @@
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="28dp">
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_fragment_compass">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="match_parent"
@@ -127,24 +135,28 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="8dp"
-        android:layout_gravity="bottom">
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/frameLayout"
+        app:layout_constraintStart_toStartOf="@+id/frameLayout"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintVertical_bias="1.0">
 
         <ImageView
             android:layout_width="match_parent"
-            android:background="@drawable/custom_shape_turqoise"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:background="@drawable/custom_shape_turqoise" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/pray_time_rv"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="12dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="5"
-            tools:listitem="@layout/pray_time_card"/>
+            tools:listitem="@layout/pray_time_card" />
     </FrameLayout>
-
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

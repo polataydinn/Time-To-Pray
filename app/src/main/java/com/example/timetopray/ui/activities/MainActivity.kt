@@ -1,9 +1,9 @@
 package com.example.timetopray.ui.activities
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Address
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -26,6 +26,7 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+import github.com.st235.lib_expandablebottombar.Menu
 import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
 
 
@@ -39,11 +40,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setUserPermissions()
-
         val bottomBar: ExpandableBottomBar = binding.bottomBar
         val menu = bottomBar.menu
+        setMenu(menu)
+        bottomBarListener(bottomBar)
+        setUserPermissions()
+    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (ifPermissionsDenied()) {
+            showSettingsDialog()
+            return
+        } else {
+            getLocation()
+        }
+    }
+
+    fun setMenu(menu: Menu) {
         menu.add(
             MenuItemDescriptor.Builder(
                 this,
@@ -73,7 +87,9 @@ class MainActivity : AppCompatActivity() {
                 resources.getColor(R.color.turquoise)
             ).build()
         )
+    }
 
+    fun bottomBarListener(bottomBar: ExpandableBottomBar) {
         bottomBar.onItemSelectedListener = { _, menuItem, _ ->
             when (menuItem.id) {
                 R.id.home -> {
@@ -116,7 +132,7 @@ class MainActivity : AppCompatActivity() {
                         getLocation()
                     }
 
-                    if (report.deniedPermissionResponses.size != 0 && !report.isAnyPermissionPermanentlyDenied){
+                    if (report.deniedPermissionResponses.size != 0 && !report.isAnyPermissionPermanentlyDenied) {
                         setUserPermissions()
                     }
 
@@ -124,6 +140,7 @@ class MainActivity : AppCompatActivity() {
                         showSettingsDialog()
                     }
                 }
+
                 override fun onPermissionRationaleShouldBeShown(
                     permissions: MutableList<com.karumi.dexter.listener.PermissionRequest>?,
                     token: PermissionToken?
@@ -139,23 +156,6 @@ class MainActivity : AppCompatActivity() {
             }
             .onSameThread()
             .check()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            showSettingsDialog()
-            return
-        } else {
-            getLocation()
-        }
     }
 
     private fun showSettingsDialog() {
@@ -176,17 +176,45 @@ class MainActivity : AppCompatActivity() {
 
     private fun getLocation() {
         Utils.getLocation(this) {
-            val userLocation =
-                it?.let { location ->
-                    UserLocation(
-                        location.adminArea.uppercase(),
-                        it.subAdminArea
-                    )
+            var mAddress = it
+            if (it?.adminArea?.contains('i')!!){
+                mAddress?.adminArea = it.adminArea?.replace('i', 'İ')
+            }
+            mTimeToPrayViewModel.getUserLocation?.observe(this) { mUserLocation ->
+                if (mUserLocation == null && mAddress != null) {
+                    insertUserLocationToRoom(mAddress)
                 }
-            if (userLocation != null) {
-                mTimeToPrayViewModel.insertUserLocation(userLocation)
-                mTimeToPrayViewModel.getAllCities(userLocation.cityName)
+                else if ( mAddress != null && (mUserLocation.cityName != mAddress.adminArea?.uppercase())) {
+                    mTimeToPrayViewModel.deleteUserLocation()
+                    mTimeToPrayViewModel.deleteAllTimes()
+                    mTimeToPrayViewModel.deleteAllCityInfo()
+                    insertUserLocationToRoom(mAddress)
+                }
             }
         }
+    }
+
+    private fun insertUserLocationToRoom(location: Address) {
+        val userLocation =
+            location.let { mLocation ->
+                UserLocation(
+                    mLocation.adminArea.uppercase(),
+                    mLocation.subAdminArea
+                )
+            }
+        if (userLocation != null) {
+            mTimeToPrayViewModel.insertUserLocation(userLocation)
+            mTimeToPrayViewModel.getAllCities(userLocation.cityName)
+        }
+    }
+
+    fun ifPermissionsDenied(): Boolean {
+        return ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) != PackageManager.PERMISSION_GRANTED
     }
 }
