@@ -14,16 +14,18 @@ import android.view.animation.Animation
 import android.view.animation.RotateAnimation
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.timetopray.R
 import com.example.timetopray.databinding.FragmentQiblaBinding
 import com.example.timetopray.ui.activities.MainActivity
+import com.example.timetopray.ui.viewmodel.TimeToPrayViewModel
 import com.example.timetopray.ui.fragments.mainfragment.MainFragment
 
 class QiblaFragment : Fragment(), SensorEventListener {
     private lateinit var _binding: FragmentQiblaBinding
     private val binding get() = _binding
+    private val mTimeToPrayViewModel: TimeToPrayViewModel by viewModels()
     private lateinit var sensorManager: SensorManager
-    private lateinit var sensor: Sensor
     private var currentDegree: Float = 0.0f
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -48,6 +50,13 @@ class QiblaFragment : Fragment(), SensorEventListener {
         binding.qibleFragmentBackPress.setOnClickListener {
             activity?.supportFragmentManager?.beginTransaction()
                 ?.replace(R.id.mainFragmentContainer, MainFragment())?.commit()
+        }
+
+        mTimeToPrayViewModel.getUserLocation?.observe(viewLifecycleOwner){
+            it?.let {
+                binding.qibleFragmentCityName.text = it.cityName
+                binding.detailedAddress.text = it.detailedAddress
+            }
         }
     }
 

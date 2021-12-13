@@ -1,9 +1,10 @@
-package com.example.timetopray.ui.data.viewmodel
+package com.example.timetopray.ui.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.timetopray.ui.data.models.cities.City
+import com.example.timetopray.ui.data.models.fridaymessages.FridayMessageItem
 import com.example.timetopray.ui.data.models.praytimes.PrayerTime
 import com.example.timetopray.ui.data.models.userlocation.UserLocation
 import com.example.timetopray.ui.data.repository.Repository
@@ -16,8 +17,9 @@ class TimeToPrayViewModel(application: Application) : AndroidViewModel(applicati
     private val timeToPrayDao = TimeToPrayDatabase.getDatabase(application).timeToPrayDao()
     private val repository = Repository(timeToPrayDao)
     val getCity = repository.getCity
-    val getAllTimes = repository.getAllTimes()
+    val getAllTimes = repository.getAllTimes
     val getUserLocation = repository.getUserLocation
+    val getAllFridayMessages = repository.getAllFridayMessages
 
     fun getAllCities(cityName: String) {
         var city = listOf<City>()
@@ -29,6 +31,16 @@ class TimeToPrayViewModel(application: Application) : AndroidViewModel(applicati
                 city[0].let {
                     insertCity(it)
                     getTimes(it._id)
+                }
+            }
+        }
+    }
+
+    fun getAllMessages() {
+        repository.getAllMessages {
+            it.fridayMessage?.forEach { fridayMessage ->
+                fridayMessage?.let { mFridayMessage ->
+                    insertFridayMessage(mFridayMessage)
                 }
             }
         }
@@ -51,6 +63,12 @@ class TimeToPrayViewModel(application: Application) : AndroidViewModel(applicati
     fun insertTime(prayTime: PrayerTime) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertTime(prayTime)
+        }
+    }
+
+    fun insertFridayMessage(fridayMessageItem: FridayMessageItem) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.insertFridayMessage(fridayMessageItem)
         }
     }
 

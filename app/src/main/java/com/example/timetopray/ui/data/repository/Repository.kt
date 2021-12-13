@@ -1,11 +1,13 @@
 package com.example.timetopray.ui.data.repository
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import com.example.timetopray.ui.data.api.Retrofit
+import com.example.timetopray.ui.data.api.fridaymessage.FridayRetrofit
+import com.example.timetopray.ui.data.api.praytime.Retrofit
 import com.example.timetopray.ui.data.models.cities.Cities
 import com.example.timetopray.ui.data.models.cities.City
 import com.example.timetopray.ui.data.models.cities.Country
+import com.example.timetopray.ui.data.models.fridaymessages.FridayMessageItem
+import com.example.timetopray.ui.data.models.fridaymessages.FridayMessages
 import com.example.timetopray.ui.data.models.praytimes.PrayTimes
 import com.example.timetopray.ui.data.models.praytimes.PrayerTime
 import com.example.timetopray.ui.data.models.userlocation.UserLocation
@@ -51,11 +53,31 @@ class Repository(private val timeToPrayDao: TimeToPrayDao) {
         }
     }
 
+    fun getAllMessages(onResponse: (FridayMessages) -> Unit) {
+        FridayRetrofit.retrofit.let {
+            FridayRetrofit.api.getAllMessages().enqueue(object : Callback<FridayMessages> {
+                override fun onResponse(
+                    call: Call<FridayMessages>,
+                    response: Response<FridayMessages>
+                ) {
+                    response.body()?.let { responseBody ->
+                        onResponse(responseBody)
+                    }
+                }
+
+                override fun onFailure(call: Call<FridayMessages>, t: Throwable) {
+                    Log.d("Error", "Failed To Receive Data")
+                }
+
+            })
+        }
+    }
+
     val getCity = timeToPrayDao.getCity()
 
-    fun getAllTimes(): LiveData<List<PrayerTime>>? {
-        return timeToPrayDao.getAllTimes()
-    }
+    val getAllTimes = timeToPrayDao.getAllTimes()
+
+    val getAllFridayMessages = timeToPrayDao.getAllFridayMessages()
 
     val getUserLocation = timeToPrayDao.getUserLocation()
 
@@ -67,7 +89,11 @@ class Repository(private val timeToPrayDao: TimeToPrayDao) {
         timeToPrayDao.insertTime(prayTime)
     }
 
-    suspend fun insertUserLocation(userLocation: UserLocation){
+    suspend fun insertFridayMessage(fridayMessageItem: FridayMessageItem) {
+        timeToPrayDao.insertFridayMessage(fridayMessageItem)
+    }
+
+    suspend fun insertUserLocation(userLocation: UserLocation) {
         timeToPrayDao.insertUserLocation(userLocation)
     }
 
@@ -79,7 +105,7 @@ class Repository(private val timeToPrayDao: TimeToPrayDao) {
         timeToPrayDao.deleteAllTimes()
     }
 
-    suspend fun deleteUserLocation(){
+    suspend fun deleteUserLocation() {
         timeToPrayDao.deleteUserLocation()
     }
 }

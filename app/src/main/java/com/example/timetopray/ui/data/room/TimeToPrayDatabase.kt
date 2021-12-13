@@ -5,10 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.timetopray.ui.data.models.cities.City
+import com.example.timetopray.ui.data.models.fridaymessages.FridayMessageItem
+import com.example.timetopray.ui.data.models.fridaymessages.FridayMessages
 import com.example.timetopray.ui.data.models.praytimes.PrayerTime
 import com.example.timetopray.ui.data.models.userlocation.UserLocation
 
-@Database(entities = [PrayerTime::class, City::class, UserLocation::class], version = 1, exportSchema = false)
+@Database(entities = [PrayerTime::class, City::class, UserLocation::class, FridayMessageItem::class], version = 1, exportSchema = false)
 abstract class TimeToPrayDatabase : RoomDatabase() {
 
     abstract fun timeToPrayDao(): TimeToPrayDao

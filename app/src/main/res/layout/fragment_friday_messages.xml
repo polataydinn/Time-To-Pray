@@ -3,33 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.fridaymessagesfragment.FridayMessagesFragment">
 
-    <FrameLayout
-        android:id="@+id/qible_fragment_back_press"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/custom_button_shape"
-        android:clickable="true"
-        android:elevation="1dp"
-        android:focusable="true"
-        android:foreground="@drawable/my_ripple">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="4dp"
-            android:src="@drawable/ic_back" />
-
-    </FrameLayout>
-
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/friday_messages_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="64dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_marginTop="24dp"
         tools:listitem="@layout/firday_messages_card"/>
 
 </FrameLayout>

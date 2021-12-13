@@ -1,4 +1,4 @@
-package com.example.timetopray.ui.data.api
+package com.example.timetopray.ui.data.api.praytime
 
 import com.example.timetopray.ui.constants.Constants
 import okhttp3.OkHttpClient

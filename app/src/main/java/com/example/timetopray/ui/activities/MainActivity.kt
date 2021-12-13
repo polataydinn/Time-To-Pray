@@ -16,7 +16,7 @@ import androidx.core.view.isVisible
 import com.example.timetopray.R
 import com.example.timetopray.databinding.ActivityMainBinding
 import com.example.timetopray.ui.data.models.userlocation.UserLocation
-import com.example.timetopray.ui.data.viewmodel.TimeToPrayViewModel
+import com.example.timetopray.ui.viewmodel.TimeToPrayViewModel
 import com.example.timetopray.ui.fragments.fridaymessagesfragment.FridayMessagesFragment
 import com.example.timetopray.ui.fragments.mainfragment.MainFragment
 import com.example.timetopray.ui.fragments.profilefragment.ProfileFragment

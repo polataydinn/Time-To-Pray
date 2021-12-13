@@ -3,6 +3,8 @@ package com.example.timetopray.ui.data.room
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.timetopray.ui.data.models.cities.City
+import com.example.timetopray.ui.data.models.fridaymessages.FridayMessageItem
+import com.example.timetopray.ui.data.models.fridaymessages.FridayMessages
 import com.example.timetopray.ui.data.models.praytimes.PrayerTime
 import com.example.timetopray.ui.data.models.userlocation.UserLocation
 
@@ -15,6 +17,9 @@ interface TimeToPrayDao {
     @Query("SELECT * FROM time_table")
     fun getAllTimes(): LiveData<List<PrayerTime>>?
 
+    @Query("SELECT * FROM friday_messages")
+    fun getAllFridayMessages(): LiveData<List<FridayMessageItem>>
+
     @Query("SELECT * FROM user_location")
     fun getUserLocation(): LiveData<UserLocation>?
 
@@ -23,6 +28,9 @@ interface TimeToPrayDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTime(prayTime: PrayerTime)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertFridayMessage(fridayMessageItem: FridayMessageItem)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertUserLocation(userLocation: UserLocation)

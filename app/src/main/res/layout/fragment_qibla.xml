@@ -59,6 +59,7 @@
     </FrameLayout>
 
     <TextView
+        android:id="@+id/qible_fragment_city_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
