@@ -28,6 +28,8 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
 import github.com.st235.lib_expandablebottombar.Menu
 import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
+import java.io.File
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -45,7 +47,10 @@ class MainActivity : AppCompatActivity() {
         setMenu(menu)
         bottomBarListener(bottomBar)
         setUserPermissions()
+        checkIfFridayMessagesDownloaded()
     }
+
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -126,6 +131,8 @@ class MainActivity : AppCompatActivity() {
         Dexter.withContext(this)
             .withPermissions(
                 Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
             ).withListener(object : MultiplePermissionsListener {
                 override fun onPermissionsChecked(report: MultiplePermissionsReport) {
                     if (report.areAllPermissionsGranted()) {
@@ -216,5 +223,13 @@ class MainActivity : AppCompatActivity() {
             this,
             Manifest.permission.ACCESS_COARSE_LOCATION
         ) != PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun checkIfFridayMessagesDownloaded() {
+        mTimeToPrayViewModel.getAllFridayMessages.observe(this){
+            if (it.isEmpty()){
+                mTimeToPrayViewModel.getAllMessages()
+            }
+        }
     }
 }

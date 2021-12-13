@@ -38,9 +38,9 @@ class TimeToPrayViewModel(application: Application) : AndroidViewModel(applicati
 
     fun getAllMessages() {
         repository.getAllMessages {
-            it.fridayMessage?.forEach { fridayMessage ->
-                fridayMessage?.let { mFridayMessage ->
-                    insertFridayMessage(mFridayMessage)
+            it.fridayMessage?.forEach { fridayMessageItem ->
+                fridayMessageItem?.let { mFridayMessageItem ->
+                    insertFridayMessage(mFridayMessageItem)
                 }
             }
         }

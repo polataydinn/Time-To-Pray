@@ -19,7 +19,7 @@ object Utils {
         var cityName: Address?
         val locationManager =
             context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        if (ifPermissionsDenied(context)) {
+        if (isPermissionsDenied(context)) {
             return
         } else {
             val location = locationManager.requestLocationUpdates(
@@ -44,7 +44,7 @@ object Utils {
 
     }
 
-    private fun ifPermissionsDenied(context: Context): Boolean {
+    private fun isPermissionsDenied(context: Context): Boolean {
         return ActivityCompat.checkSelfPermission(
             context,
             Manifest.permission.ACCESS_FINE_LOCATION

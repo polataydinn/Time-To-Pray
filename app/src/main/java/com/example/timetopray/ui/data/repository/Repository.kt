@@ -60,8 +60,8 @@ class Repository(private val timeToPrayDao: TimeToPrayDao) {
                     call: Call<FridayMessages>,
                     response: Response<FridayMessages>
                 ) {
-                    response.body()?.let { responseBody ->
-                        onResponse(responseBody)
+                    response.body()?.let {
+                        onResponse(it)
                     }
                 }
 

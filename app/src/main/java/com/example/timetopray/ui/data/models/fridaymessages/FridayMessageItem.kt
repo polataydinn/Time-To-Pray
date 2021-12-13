@@ -6,8 +6,7 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "friday_messages")
 data class FridayMessageItem(
-    @PrimaryKey(autoGenerate = true)
-    val _id: Int,
+    @PrimaryKey
     @SerializedName("image")
-    val image: String?
+    val image: String
 )
