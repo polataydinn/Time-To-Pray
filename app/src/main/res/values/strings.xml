@@ -22,4 +22,6 @@
     <string name="about">Hakkında</string>
     <string name="logout">Çıkış Yap</string>
     <string name="ayats">Ayetler</string>
+    <string name="share">Paylaş</string>
+    <string name="copy">Kopyala</string>
 </resources>

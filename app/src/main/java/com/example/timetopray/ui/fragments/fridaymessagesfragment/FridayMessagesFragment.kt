@@ -55,15 +55,15 @@ class FridayMessagesFragment : Fragment() {
                         intent.setType("image/jpeg");
                         intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(savedFile!!.absolutePath))
                         listOfSavedFiles.add(savedFile!!)
-                        startActivity(Intent.createChooser(intent, "Resimi paylaş"))
+                        startActivity(Intent.createChooser(intent, "Resimi Paylaş"))
                     }
                 }
             }
         }
 
-        mTimeToPrayViewModel.getAllFridayMessages?.observe(viewLifecycleOwner) {
+        mTimeToPrayViewModel.getAllFridayMessages.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
-                adapter.setList(it)
+                adapter.setList(it.shuffled())
                 binding.fridayMessagesRecyclerView.adapter = adapter
             }
         }
