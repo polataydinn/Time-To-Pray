@@ -12,10 +12,11 @@ import com.example.timetopray.databinding.FragmentMainBinding
 import com.example.timetopray.ui.activities.MainActivity
 import com.example.timetopray.ui.constants.Constants
 import com.example.timetopray.ui.data.models.praytimes.CustomPrayTime
-import com.example.timetopray.ui.viewmodel.TimeToPrayViewModel
+import com.example.timetopray.ui.fragments.ayats.AyatsFragment
 import com.example.timetopray.ui.fragments.mainfragment.adapter.MainFragmentAdapter
 import com.example.timetopray.ui.fragments.qiblefragment.QiblaFragment
 import com.example.timetopray.ui.util.Utils
+import com.example.timetopray.ui.viewmodel.TimeToPrayViewModel
 import java.util.*
 
 class MainFragment : Fragment() {
@@ -42,7 +43,7 @@ class MainFragment : Fragment() {
 
         binding.mainFragmentCurrentTime.format12Hour = "kk:mm"
 
-        mTimeToPrayViewModel.getUserLocation?.observe(viewLifecycleOwner){
+        mTimeToPrayViewModel.getUserLocation?.observe(viewLifecycleOwner) {
             it?.let {
                 binding.mainFragmentCityName.text = it.cityName
                 binding.detailedAddress.text = it.detailedAddress
@@ -53,9 +54,9 @@ class MainFragment : Fragment() {
             if (it.isNotEmpty()) {
                 val listOfCustomPrayTime: MutableList<CustomPrayTime> = mutableListOf()
                 val prayerTime = it.filter {
-                    it.date == ((currentTime.year+1900).toString() + "-" + (currentTime.month + 1) + "-" + (currentTime.date))
+                    it.date == ((currentTime.year + 1900).toString() + "-" + (currentTime.month + 1) + "-" + (currentTime.date))
                 }
-                if (prayerTime.isNotEmpty()){
+                if (prayerTime.isNotEmpty()) {
                     prayerTime[0].let { mPrayerTime ->
                         mPrayerTime.apply {
                             listOfCustomPrayTime.add(CustomPrayTime("İmsak", imsak))
@@ -71,7 +72,7 @@ class MainFragment : Fragment() {
                 mainFragmentAdapter.setList(listOfCustomPrayTime)
                 binding.prayTimeRv.adapter = mainFragmentAdapter
             } else {
-                Utils.getLocation(activity as MainActivity){ cityName ->
+                Utils.getLocation(activity as MainActivity) { cityName ->
                     cityName?.adminArea?.let { city -> mTimeToPrayViewModel.getAllCities(city.uppercase()) }
                 }
             }
@@ -87,6 +88,12 @@ class MainFragment : Fragment() {
             val qiblaFragment = QiblaFragment()
             activity?.supportFragmentManager?.beginTransaction()
                 ?.replace(R.id.mainFragmentContainer, qiblaFragment)?.addToBackStack("")?.commit()
+        }
+
+        binding.mainFragmentAyats.setOnClickListener {
+            val ayatsFragment = AyatsFragment()
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.mainFragmentContainer, ayatsFragment)?.addToBackStack(".")?.commit()
         }
     }
 }

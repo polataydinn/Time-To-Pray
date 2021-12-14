@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:paddingBottom="24dp"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="6dp"
+        android:layout_height="0dp"
+        android:background="@drawable/custom_shape_turqoise"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/ayats_fragment_ayat_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Ey iman edenler! Kendinizi ve ailenizi, yakıtı insanlar ve taşlar olan ateşten koruyun. O ateşin başında gayet katı, çetin, Allah'ın (c.c) kendilerine verdiği emirlere karşı gelmeyen ve kendilerine emredilen şeyi yapan melekler vardır."
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_marginStart="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/ayats_fragment_ayat_source"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(Tahrîm: 6)"
+        android:layout_marginStart="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/ayats_fragment_ayat_text" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

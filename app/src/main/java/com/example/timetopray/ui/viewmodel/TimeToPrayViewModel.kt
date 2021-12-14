@@ -3,6 +3,7 @@ package com.example.timetopray.ui.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.timetopray.ui.data.models.ayats.Ayat
 import com.example.timetopray.ui.data.models.cities.City
 import com.example.timetopray.ui.data.models.fridaymessages.FridayMessageItem
 import com.example.timetopray.ui.data.models.praytimes.PrayerTime
@@ -18,6 +19,7 @@ class TimeToPrayViewModel(application: Application) : AndroidViewModel(applicati
     private val repository = Repository(timeToPrayDao)
     val getCity = repository.getCity
     val getAllTimes = repository.getAllTimes
+    val getAllAyats = repository.getAllAyats
     val getUserLocation = repository.getUserLocation
     val getAllFridayMessages = repository.getAllFridayMessages
 
@@ -36,20 +38,31 @@ class TimeToPrayViewModel(application: Application) : AndroidViewModel(applicati
         }
     }
 
+    fun getTimes(cityId: String) {
+        repository.getTimes(cityId) { prayTimes ->
+            prayTimes.prayerTimes.forEach {
+                insertTime(it)
+            }
+        }
+    }
+
+    fun getAllAyats(){
+        repository.getAllAyats {
+            it.ayats?.forEach { ayat ->
+                ayat?.let {
+                    insertAyat(ayat)
+                }
+            }
+        }
+    }
+
+
     fun getAllMessages() {
         repository.getAllMessages {
             it.fridayMessage?.forEach { fridayMessageItem ->
                 fridayMessageItem?.let { mFridayMessageItem ->
                     insertFridayMessage(mFridayMessageItem)
                 }
-            }
-        }
-    }
-
-    fun getTimes(cityId: String) {
-        repository.getTimes(cityId) { prayTimes ->
-            prayTimes.prayerTimes.forEach {
-                insertTime(it)
             }
         }
     }
@@ -63,6 +76,12 @@ class TimeToPrayViewModel(application: Application) : AndroidViewModel(applicati
     fun insertTime(prayTime: PrayerTime) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertTime(prayTime)
+        }
+    }
+
+    fun insertAyat(ayat: Ayat){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.insertAyat(ayat)
         }
     }
 

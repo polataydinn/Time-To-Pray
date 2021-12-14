@@ -1,5 +1,6 @@
 package com.example.timetopray.ui.data.api.praytime
 
+import com.example.timetopray.ui.data.models.ayats.Ayats
 import com.example.timetopray.ui.data.models.cities.Cities
 import com.example.timetopray.ui.data.models.praytimes.PrayTimes
 import retrofit2.Call
@@ -12,4 +13,7 @@ interface PrayTimeApi {
 
     @GET("getTimes/{cityId}")
     fun getTimes(@Path(value = "cityId", encoded = true) cityId: String): Call<PrayTimes>
+
+    @GET("getAllAyats")
+    fun getAllAyats(): Call<Ayats>
 }

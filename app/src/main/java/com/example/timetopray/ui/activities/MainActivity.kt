@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         setMenu(menu)
         bottomBarListener(bottomBar)
         setUserPermissions()
+        checkIfAyatsDownloaded()
         checkIfFridayMessagesDownloaded()
     }
 
@@ -221,6 +222,14 @@ class MainActivity : AppCompatActivity() {
             this,
             Manifest.permission.ACCESS_COARSE_LOCATION
         ) != PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun checkIfAyatsDownloaded() {
+        mTimeToPrayViewModel.getAllAyats?.observe(this){
+            if (it.isEmpty()){
+                mTimeToPrayViewModel.getAllAyats()
+            }
+        }
     }
 
     private fun checkIfFridayMessagesDownloaded() {

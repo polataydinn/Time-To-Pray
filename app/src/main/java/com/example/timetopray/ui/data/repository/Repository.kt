@@ -3,6 +3,8 @@ package com.example.timetopray.ui.data.repository
 import android.util.Log
 import com.example.timetopray.ui.data.api.fridaymessage.FridayRetrofit
 import com.example.timetopray.ui.data.api.praytime.Retrofit
+import com.example.timetopray.ui.data.models.ayats.Ayat
+import com.example.timetopray.ui.data.models.ayats.Ayats
 import com.example.timetopray.ui.data.models.cities.Cities
 import com.example.timetopray.ui.data.models.cities.City
 import com.example.timetopray.ui.data.models.cities.Country
@@ -53,6 +55,22 @@ class Repository(private val timeToPrayDao: TimeToPrayDao) {
         }
     }
 
+    fun getAllAyats(onResponse: (Ayats) -> Unit) {
+        Retrofit.retrofit.let {
+            Retrofit.api.getAllAyats().enqueue(object : Callback<Ayats> {
+                override fun onResponse(call: Call<Ayats>, response: Response<Ayats>) {
+                    response.body()?.let {
+                        onResponse(it)
+                    }
+                }
+
+                override fun onFailure(call: Call<Ayats>, t: Throwable) {
+                    Log.d("Error", "Failed To Receive Data")
+                }
+            })
+        }
+    }
+
     fun getAllMessages(onResponse: (FridayMessages) -> Unit) {
         FridayRetrofit.retrofit.let {
             FridayRetrofit.api.getAllMessages().enqueue(object : Callback<FridayMessages> {
@@ -77,6 +95,8 @@ class Repository(private val timeToPrayDao: TimeToPrayDao) {
 
     val getAllTimes = timeToPrayDao.getAllTimes()
 
+    val getAllAyats = timeToPrayDao.getAllAyats()
+
     val getAllFridayMessages = timeToPrayDao.getAllFridayMessages()
 
     val getUserLocation = timeToPrayDao.getUserLocation()
@@ -87,6 +107,10 @@ class Repository(private val timeToPrayDao: TimeToPrayDao) {
 
     suspend fun insertTime(prayTime: PrayerTime) {
         timeToPrayDao.insertTime(prayTime)
+    }
+
+    suspend fun insertAyat(ayat: Ayat){
+        timeToPrayDao.insertAyat(ayat)
     }
 
     suspend fun insertFridayMessage(fridayMessageItem: FridayMessageItem) {
