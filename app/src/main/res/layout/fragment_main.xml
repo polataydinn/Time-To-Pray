@@ -1,162 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragments.mainfragment.MainFragment">
+    android:layout_height="match_parent" android:layout_width="match_parent">
 
-
-    <FrameLayout
-        android:id="@+id/main_fragment_ayats"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="@drawable/custom_button_shape_white"
-        android:clickable="true"
-        android:focusable="true"
-        android:layout_margin="24dp"
-        android:foreground="@drawable/my_ripple"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_book" />
-    </FrameLayout>
-
-    <TextView
-        android:id="@+id/main_fragment_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center|top"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/frameLayout"
-        app:layout_constraintEnd_toStartOf="@+id/main_fragment_compass"
-        app:layout_constraintStart_toEndOf="@+id/main_fragment_guide"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <FrameLayout
-        android:id="@+id/main_fragment_compass"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="top|end"
-        android:background="@drawable/custom_button_shape_white"
-        android:clickable="true"
-        android:focusable="true"
-        android:layout_margin="24dp"
-        android:foreground="@drawable/my_ripple"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_compass" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/frameLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_fragment_compass">
+        android:layout_height="match_parent"
+        tools:context=".ui.fragments.mainfragment.MainFragment">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/camel_walking"
-            android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize25Percent" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/transparent_turquoise"
-            android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize25Percent" />
-
-        <TextView
-            android:id="@+id/main_fragment_city_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="48dp"
-            android:elevation="1dp"
-            android:fontFamily="sans-serif-condensed"
-            android:text="@string/kahramanmaras"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-        <TextClock
-            android:id="@+id/main_fragment_current_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="78dp"
-            android:elevation="1dp"
-            android:fontFamily="sans-serif-condensed"
-            android:text="11:30"
-            android:textColor="@color/white"
-            android:textSize="36sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="138dp"
-            android:elevation="1dp">
+        <FrameLayout
+            android:id="@+id/main_fragment_ayats"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="24dp"
+            android:background="@drawable/custom_button_shape_white"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/my_ripple"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_location" />
-
-            <TextView
-                android:id="@+id/detailed_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_book" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/main_fragment_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+            app:layout_constraintEnd_toStartOf="@+id/main_fragment_compass"
+            app:layout_constraintStart_toEndOf="@+id/main_fragment_ayats"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/main_fragment_compass"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="top|end"
+            android:layout_margin="24dp"
+            android:background="@drawable/custom_button_shape_white"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/my_ripple"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_compass" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_fragment_compass">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/camel_walking"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize25Percent" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent_turquoise"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize25Percent" />
+
+            <TextView
+                android:id="@+id/main_fragment_city_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="48dp"
+                android:elevation="1dp"
                 android:fontFamily="sans-serif-condensed"
-                android:textColor="@color/white" />
-        </LinearLayout>
-    </FrameLayout>
+                android:text="@string/kahramanmaras"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/frameLayout"
-        app:layout_constraintStart_toStartOf="@+id/frameLayout"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        app:layout_constraintVertical_bias="1.0">
+            <TextClock
+                android:id="@+id/main_fragment_current_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="78dp"
+                android:elevation="1dp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="11:30"
+                android:textColor="@color/white"
+                android:textSize="36sp"
+                android:textStyle="bold" />
 
-        <ImageView
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="138dp"
+                android:elevation="1dp">
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_location" />
+
+                <TextView
+                    android:id="@+id/detailed_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/custom_shape_turqoise" />
+            android:layout_height="250dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="48dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/frameLayout"
+            app:layout_constraintStart_toStartOf="@+id/frameLayout"
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+            app:layout_constraintVertical_bias="1.0">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/pray_time_rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="12dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="5"
-            tools:listitem="@layout/pray_time_card" />
-    </FrameLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/custom_shape_turqoise" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/pray_time_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="12dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="5"
+                tools:listitem="@layout/pray_time_card" />
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

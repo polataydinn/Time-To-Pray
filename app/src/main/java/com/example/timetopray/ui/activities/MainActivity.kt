@@ -16,11 +16,12 @@ import androidx.core.view.isVisible
 import com.example.timetopray.R
 import com.example.timetopray.databinding.ActivityMainBinding
 import com.example.timetopray.ui.data.models.userlocation.UserLocation
-import com.example.timetopray.ui.viewmodel.TimeToPrayViewModel
 import com.example.timetopray.ui.fragments.fridaymessagesfragment.FridayMessagesFragment
 import com.example.timetopray.ui.fragments.mainfragment.MainFragment
 import com.example.timetopray.ui.fragments.profilefragment.ProfileFragment
 import com.example.timetopray.ui.util.Utils
+import com.example.timetopray.ui.viewmodel.TimeToPrayViewModel
+import com.google.android.gms.ads.MobileAds
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -28,7 +29,6 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
 import github.com.st235.lib_expandablebottombar.Menu
 import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
-import java.io.File
 import java.util.*
 
 
@@ -44,6 +44,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         val bottomBar: ExpandableBottomBar = binding.bottomBar
         val menu = bottomBar.menu
+
+        MobileAds.initialize(this) { }
         setMenu(menu)
         bottomBarListener(bottomBar)
         setUserPermissions()
@@ -183,14 +185,13 @@ class MainActivity : AppCompatActivity() {
     private fun getLocation() {
         Utils.getLocation(this) {
             var mAddress = it
-            if (it?.adminArea?.contains('i')!!){
+            if (it?.adminArea?.contains('i')!!) {
                 mAddress?.adminArea = it.adminArea?.replace('i', 'İ')
             }
             mTimeToPrayViewModel.getUserLocation?.observe(this) { mUserLocation ->
                 if (mUserLocation == null && mAddress != null) {
                     insertUserLocationToRoom(mAddress)
-                }
-                else if ( mAddress != null && (mUserLocation.cityName != mAddress.adminArea?.uppercase())) {
+                } else if (mAddress != null && (mUserLocation.cityName != mAddress.adminArea?.uppercase())) {
                     mTimeToPrayViewModel.deleteUserLocation()
                     mTimeToPrayViewModel.deleteAllTimes()
                     mTimeToPrayViewModel.deleteAllCityInfo()
@@ -225,16 +226,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkIfAyatsDownloaded() {
-        mTimeToPrayViewModel.getAllAyats?.observe(this){
-            if (it.isEmpty()){
+        mTimeToPrayViewModel.getAllAyats?.observe(this) {
+            if (it.isEmpty()) {
                 mTimeToPrayViewModel.getAllAyats()
             }
         }
     }
 
     private fun checkIfFridayMessagesDownloaded() {
-        mTimeToPrayViewModel.getAllFridayMessages.observe(this){
-            if (it.isEmpty()){
+        mTimeToPrayViewModel.getAllFridayMessages.observe(this) {
+            if (it.isEmpty()) {
                 mTimeToPrayViewModel.getAllMessages()
             }
         }

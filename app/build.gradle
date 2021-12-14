@@ -98,4 +98,7 @@ dependencies {
     //RecyclerViewSwipeDecorator
     implementation 'it.xabaras.android:recyclerview-swipedecorator:1.2.3'
 
+    //Admob
+    implementation 'com.google.android.gms:play-services-ads:20.5.0'
+
 }
