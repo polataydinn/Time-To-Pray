@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.timetopray.R
 import com.example.timetopray.databinding.FragmentProfileBinding
+import kotlin.system.exitProcess
 
 
 class ProfileFragment : Fragment() {
@@ -20,5 +21,13 @@ class ProfileFragment : Fragment() {
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.fragmentProfileExit.setOnClickListener {
+            exitProcess(-1)
+        }
     }
 }

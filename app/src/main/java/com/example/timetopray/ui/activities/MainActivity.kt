@@ -7,6 +7,7 @@ import android.location.Address
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -15,13 +16,16 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import com.example.timetopray.R
 import com.example.timetopray.databinding.ActivityMainBinding
+import com.example.timetopray.ui.constants.Constants
 import com.example.timetopray.ui.data.models.userlocation.UserLocation
 import com.example.timetopray.ui.fragments.fridaymessagesfragment.FridayMessagesFragment
 import com.example.timetopray.ui.fragments.mainfragment.MainFragment
 import com.example.timetopray.ui.fragments.profilefragment.ProfileFragment
 import com.example.timetopray.ui.util.Utils
 import com.example.timetopray.ui.viewmodel.TimeToPrayViewModel
-import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -36,7 +40,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val mTimeToPrayViewModel: TimeToPrayViewModel by viewModels()
-
+    var mInterstitialAd: InterstitialAd? = null
+    private val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +49,24 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         val bottomBar: ExpandableBottomBar = binding.bottomBar
         val menu = bottomBar.menu
+        val adRequest = AdRequest.Builder().build()
+        binding.bannerAd.loadAd(adRequest)
+
+        InterstitialAd.load(
+            this,
+            Constants.AD_UNIT_ID,
+            adRequest,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    Log.d("MainActivity", "Hata")
+                    mInterstitialAd = null
+                }
+
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    mInterstitialAd = interstitialAd
+                    mInterstitialAd?.show(this@MainActivity)
+                }
+            })
 
         MobileAds.initialize(this) { }
         setMenu(menu)

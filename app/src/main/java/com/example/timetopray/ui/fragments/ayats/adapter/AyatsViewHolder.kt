@@ -11,6 +11,7 @@ class AyatsViewHolder(private val binding: AyatsCardBinding) : RecyclerView.View
         binding.ayatsFragmentAyatText.text = ayat.text
         binding.ayatsFragmentAyatSource.text = ayat.source
 
+
         binding.ayatsCardRoot.setOnLongClickListener {
             onItemClickListener(ayat, binding.ayatsCardRoot)
             return@setOnLongClickListener true

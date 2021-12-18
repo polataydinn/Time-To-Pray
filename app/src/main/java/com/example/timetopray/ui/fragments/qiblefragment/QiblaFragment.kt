@@ -12,14 +12,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
+import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.timetopray.R
 import com.example.timetopray.databinding.FragmentQiblaBinding
 import com.example.timetopray.ui.activities.MainActivity
-import com.example.timetopray.ui.viewmodel.TimeToPrayViewModel
 import com.example.timetopray.ui.fragments.mainfragment.MainFragment
+import com.example.timetopray.ui.viewmodel.TimeToPrayViewModel
 
 class QiblaFragment : Fragment(), SensorEventListener {
     private lateinit var _binding: FragmentQiblaBinding
@@ -27,6 +28,7 @@ class QiblaFragment : Fragment(), SensorEventListener {
     private val mTimeToPrayViewModel: TimeToPrayViewModel by viewModels()
     private lateinit var sensorManager: SensorManager
     private var currentDegree: Float = 0.0f
+    private lateinit var adBackground: FrameLayout
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
@@ -37,12 +39,15 @@ class QiblaFragment : Fragment(), SensorEventListener {
         _binding = FragmentQiblaBinding.inflate(inflater, container, false)
         (activity as MainActivity).window.statusBarColor =
             (activity as MainActivity).getColor(R.color.dark_turquoise)
+        adBackground = (activity as MainActivity).findViewById(R.id.activity_ad_background)
+        adBackground.setBackgroundColor((activity as MainActivity).getColor(R.color.dark_turquoise))
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).hideBottomBar()
+        binding.qibleFragmentClock.format12Hour = "kk:mm"
 
         sensorManager =
             (activity as MainActivity).getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -52,7 +57,7 @@ class QiblaFragment : Fragment(), SensorEventListener {
                 ?.replace(R.id.mainFragmentContainer, MainFragment())?.commit()
         }
 
-        mTimeToPrayViewModel.getUserLocation?.observe(viewLifecycleOwner){
+        mTimeToPrayViewModel.getUserLocation?.observe(viewLifecycleOwner) {
             it?.let {
                 binding.qibleFragmentCityName.text = it.cityName
                 binding.detailedAddress.text = it.detailedAddress
@@ -80,6 +85,7 @@ class QiblaFragment : Fragment(), SensorEventListener {
         (activity as MainActivity).showBottomBar()
         (activity as MainActivity).window.statusBarColor =
             (activity as MainActivity).getColor(R.color.white)
+        adBackground.setBackgroundColor((activity as MainActivity).getColor(R.color.white))
     }
 
     override fun onSensorChanged(event: SensorEvent?) {

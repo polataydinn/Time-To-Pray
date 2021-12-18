@@ -98,6 +98,8 @@ dependencies {
     //RecyclerViewSwipeDecorator
     implementation 'it.xabaras.android:recyclerview-swipedecorator:1.2.3'
 
+    //BubbleShowCase
+    implementation 'com.elconfidencial.bubbleshowcase:bubbleshowcase:1.3.1'
     //Admob
     implementation 'com.google.android.gms:play-services-ads:20.5.0'
 
