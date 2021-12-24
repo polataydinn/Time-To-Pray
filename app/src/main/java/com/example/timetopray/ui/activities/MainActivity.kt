@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import com.example.timetopray.R
@@ -51,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         val menu = bottomBar.menu
         val adRequest = AdRequest.Builder().build()
         binding.bannerAd.loadAd(adRequest)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         InterstitialAd.load(
             this,
